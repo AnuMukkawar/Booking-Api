@@ -29,8 +29,32 @@ export async function updateRoomStatus(roomid) {
 }
 
 export async function getCustomerDetails(req) {
+  
   return await client
     .db("Booking")
     .collection("Customer")
-    .find({}).toArray();
+    .aggregate([
+      { $lookup:
+      {
+         from: "Room",
+         localField: "Room_name",
+         foreignField: "Room_id",
+         as: "Room_name"
+      }
+  }]).toArray();
+}
+
+export async function getRoomDetails(req) {
+  return await client
+    .db("Booking")
+    .collection("Room")
+    .aggregate([
+      { $lookup:
+      {
+         from: "Customer",
+         localField: "Customer_name",
+         foreignField:"ObjectId(_id)",
+         as: "Customer_name"
+      }
+  }]).toArray();
 }
