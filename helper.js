@@ -27,3 +27,10 @@ export async function updateRoomStatus(roomid) {
        },
       {upsert: true });
 }
+
+export async function getCustomerDetails(req) {
+  return await client
+    .db("Booking")
+    .collection("Customer")
+    .find({}).toArray();
+}

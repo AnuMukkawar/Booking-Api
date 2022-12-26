@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import {createRoom,bookRoom,updateRoomStatus} from "../helper.js";
+import {createRoom,bookRoom,updateRoomStatus,getCustomerDetails} from "../helper.js";
 
 router.post("/", async (req, res) => {
   const details = req.body;
@@ -17,4 +17,10 @@ router.post("/book", async (req, res) => {
   res.send(result);
 })
 
+
+router.get("/customerDetails", async (req, res) => {
+
+  const result = await getCustomerDetails(req);
+  res.send(result);
+})
 export const bookingRouter = router;
